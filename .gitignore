@@ -1,0 +1,4 @@
+obj/*.o
+*.swp
+*~
+maze_game
