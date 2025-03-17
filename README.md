@@ -9,6 +9,7 @@ Maze Game is an immersive 3D maze exploration experience built using C and SDL2.
 - **Atmospheric Design**: Explore detailed environments with textured surfaces
 - **Performance Optimized**: Built with C for responsive gameplay even on modest hardware
 - **Open Architecture**: Easily expandable codebase for adding new features
+- **Code Quality**: Adheres to strict Betty coding standards for clean, consistent, and maintainable code
 
 ## Controls
 | Key | Action |
@@ -92,6 +93,19 @@ The game uses raycasting to create a 3D perspective from a 2D map grid:
 4. Textures are mapped onto walls based on where the ray hit
 5. This creates a convincing 3D effect without using actual 3D rendering techniques
 
+## Code Standards
+
+This project strictly follows the Betty coding style, which emphasizes:
+
+- Consistent indentation and spacing
+- Proper function and variable naming conventions
+- Limited line length (80 characters max)
+- Comprehensive documentation for functions
+- Organized structure for header files
+- Clear and maintainable code organization
+
+All contributions must adhere to these standards to maintain code quality and readability.
+
 ## Roadmap
 - **Enhanced Visuals**
   - Implement dynamic lighting and shadows
@@ -117,7 +131,10 @@ Contributions are welcome! Feel free to fork this project and submit pull reques
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+6. Ensure your code adheres to the Betty style guidelines
 
+## License
+*(Add your license information here)*
 
 ## Acknowledgments
 - Developed by M0imaritim
