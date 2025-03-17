@@ -20,9 +20,6 @@ Maze Game is an immersive 3D maze exploration experience built using C and SDL2.
 | → (Right Arrow) | Rotate Right |
 | Esc | Exit Game |
 
-## Screenshots
-*(Note: Add screenshots here to showcase your game)*
-
 ## Installation
 
 ### Requirements
@@ -47,8 +44,8 @@ Maze Game is an immersive 3D maze exploration experience built using C and SDL2.
 
 2. Clone the repository:
    ```bash
-   git clone https://github.com/M0imaritim/maze-game.git
-   cd maze-game
+   git clone https://github.com/M0imaritim/Maze.git
+   cd Maze
    ```
 
 3. Compile the game:
@@ -104,7 +101,9 @@ This project strictly follows the Betty coding style, which emphasizes:
 - Organized structure for header files
 - Clear and maintainable code organization
 
-All contributions must adhere to these standards to maintain code quality and readability.
+All code adheres to the Betty style checker standards. To verify code compliance, use the Betty style checker available at: https://github.com/alx-tools/Betty
+
+Contributors should install and run Betty before submitting pull requests to ensure code quality and consistency.
 
 ## Roadmap
 - **Enhanced Visuals**
@@ -131,10 +130,7 @@ Contributions are welcome! Feel free to fork this project and submit pull reques
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-6. Ensure your code adheres to the Betty style guidelines
-
-## License
-*(Add your license information here)*
+6. Ensure your code passes all Betty style checks (https://github.com/alx-tools/Betty)
 
 ## Acknowledgments
 - Developed by M0imaritim
