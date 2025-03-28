@@ -26,9 +26,11 @@ typedef struct Player Player;
 void init_player(Player *player, float start_x,
 	float start_y, float start_angle);
 void update_player(Player *player, const Uint8 *keyboard,
-		const int maze[15][15]);
+	const int maze[15][15]);
 void move_player(Player *player, const int maze[15][15],
-		float forward, float strafe);
+	float forward, float strafe);
+void draw_minimap_player(SDL_Renderer *renderer, int map_x, int map_y,
+			int cell_size, const Player *player);
 
 
 #endif /* PLAYER_H */

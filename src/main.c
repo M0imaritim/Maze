@@ -4,18 +4,18 @@
 /**
  * handle_events - Handles SDL events (e.g., quitting, key presses)
  * @running: Pointer to the running state of the game
+ * @game_state: Pointer to the GameState structure
  */
-void handle_events(int *running)
+void handle_events(int *running, GameState *game_state)
 {
-	SDL_Event event;
-	GameState game_state;
+SDL_Event event;
 
-	while (SDL_PollEvent(&event))
+while (SDL_PollEvent(&event))
 	{
-		if (event.type == SDL_QUIT)
-			*running = 0;
-		else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_m)
-			toggle_minimap(&game_state);
+	if (event.type == SDL_QUIT)
+		*running = 0;
+	else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_m)
+		toggle_minimap(game_state);
 	}
 }
 
@@ -25,26 +25,27 @@ void handle_events(int *running)
  * @player: Pointer to the player object
  * @textures: Pointer to the Textures structure
  * @game_state: Pointer to the GameState structure
+ * @weapon_system: Pointer to the WeaponSystem structure
  */
 void render_frame(SDL_Renderer *renderer, Player *player,
-	Textures *textures, GameState *game_state)
+Textures *textures, GameState *game_state, WeaponSystem *weapon_system)
 {
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-	SDL_RenderClear(renderer);
-	update_player(player, SDL_GetKeyboardState(NULL), maze);
-	cast_rays(renderer, player, maze, textures);
-	draw_minimap(renderer, player, game_state);
+const Uint8 *keyboard = SDL_GetKeyboardState(NULL);
 
-	SDL_Rect weapon_rect = {
-		(SCREEN_WIDTH / 2) - (player->weapon_sprite->w / 2),
-		(SCREEN_HEIGHT - player->weapon_sprite->h),
-		player->weapon_sprite->w, player->weapon_sprite->h
-	};
-	SDL_Texture *weapon_texture = SDL_CreateTextureFromSurface(
-		renderer, player->weapon_sprite);
-	SDL_RenderCopy(renderer, weapon_texture, NULL, &weapon_rect);
-	SDL_DestroyTexture(weapon_texture);
-	SDL_RenderPresent(renderer);
+SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+SDL_RenderClear(renderer);
+
+update_player(player, keyboard, maze);
+update_weapon_system(weapon_system, player, keyboard, maze);
+
+cast_rays(renderer, player, maze, textures);
+
+/* Render weapon system elements */
+render_weapon_system(renderer, player, weapon_system);
+
+/* Draw minimap with player and entities */
+draw_minimap(renderer, player, game_state, weapon_system);
+SDL_RenderPresent(renderer);
 }
 
 /**
@@ -53,29 +54,43 @@ void render_frame(SDL_Renderer *renderer, Player *player,
  */
 int main(void)
 {
-	SDL_Window *window = NULL;
-	SDL_Renderer *renderer = NULL;
-	Player player;
-	Textures textures;
-	GameState game_state;
-	int running = 1;
+SDL_Window *window = NULL;
+SDL_Renderer *renderer = NULL;
+Player player;
+Textures textures;
+GameState game_state = {0};
+WeaponSystem weapon_system = {0};
+int running = 1;
+SDL_Surface *resized = NULL;
 
-	if (init_sdl(&window, &renderer) != 0 || init_textures(&textures) != 0)
-	{
-		printf("Initialization failed\n");
-		cleanup(window, renderer);
-		return (1);
-	}
-
-	init_player(&player, 1.5, 1.5, 0);
-
-	while (running)
-	{
-		handle_events(&running);
-		render_frame(renderer, &player, &textures, &game_state);
-	}
-
-	cleanup_textures(&textures);
+if (init_sdl(&window, &renderer) != 0 || init_textures(&textures) != 0)
+{
+	printf("Initialization failed\n");
 	cleanup(window, renderer);
-	return (0);
+	return (1);
+}
+
+init_player(&player, 1.5, 1.5, 0);
+if (player.weapon_sprite->w > 200 || player.weapon_sprite->h > 200)
+{
+	resized = resize_surface(player.weapon_sprite, 200, 200);
+	if (resized)
+	{
+		SDL_FreeSurface(player.weapon_sprite);
+		player.weapon_sprite = resized;
+	}
+}
+
+while (running)
+{
+	handle_events(&running, &game_state);
+	render_frame(renderer, &player, &textures, &game_state, &weapon_system);
+
+	SDL_Delay(16);
+}
+
+cleanup_weapon_sprite(&player);
+cleanup_textures(&textures);
+cleanup(window, renderer);
+return (0);
 }

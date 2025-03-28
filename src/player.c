@@ -16,24 +16,7 @@ void init_player(Player *player, float start_x, float start_y,
 	player->angle = start_angle;
 	player->dx = cos(start_angle);
 	player->dy = sin(start_angle);
-	player->weapon_sprite = create_weapon_sprite(256, 256);
-}
-
-/**
- * check_collision - Checks if a position collides with a wall
- * @maze: 2D maze array
- * @x: X position to check
- * @y: Y position to check
- * Return: 1 if collision, 0 if no collision
- */
-static int check_collision(const int maze[15][15], float x, float y)
-{
-	const float buffer = 0.08; /* Buffer for wall collision */
-
-	return (maze[(int)(y + buffer)][(int)(x + buffer)] ||
-		maze[(int)(y - buffer)][(int)(x - buffer)] ||
-		maze[(int)(y + buffer)][(int)(x - buffer)] ||
-		maze[(int)(y - buffer)][(int)(x + buffer)]);
+	player->weapon_sprite = create_weapon_sprite(200, 150);
 }
 
 /**
@@ -125,4 +108,29 @@ void update_player(Player *player, const Uint8 *keyboard,
 		rotate_player(player, -turn_speed);
 	if (keyboard[SDL_SCANCODE_RIGHT])
 		rotate_player(player, turn_speed);
+}
+
+/**
+ * draw_minimap_player - Draws player dot and direction line on minimap.
+ * @renderer: SDL renderer.
+ * @map_x: X position of the minimap.
+ * @map_y: Y position of the minimap.
+ * @cell_size: Size of each cell in the minimap.
+ * @player: Pointer to player structure.
+ */
+void draw_minimap_player(SDL_Renderer *renderer, int map_x, int map_y,
+			 int cell_size, const Player *player)
+{
+	SDL_Rect player_dot = {
+		map_x + (player->x * cell_size) - 1,
+		map_y + (player->y * cell_size) - 1,
+		3, 3
+	};
+
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_RenderFillRect(renderer, &player_dot);
+
+	SDL_RenderDrawLine(renderer, player_dot.x + 1, player_dot.y + 1,
+			   player_dot.x + 1 + (cos(player->angle) * (cell_size - 2)),
+			   player_dot.y + 1 + (sin(player->angle) * (cell_size - 2)));
 }

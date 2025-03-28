@@ -6,18 +6,20 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "player.h"
+#include "weapon_sprites.h"
 
 #define SCREEN_WIDTH 700
-#define SCREEN_HEIGHT 700
-#define TILE_SIZE 46
+#define SCREEN_HEIGHT 600
+#define TILE_SIZE 64
 #define MAZE_ROWS 15
 #define MAZE_COLS 15
 #define TEXTURE_SIZE 64  /* Size of wall and floor textures */
 
 /* Constants for raycasting */
 #define FOV 60.0       /* Field of View in degrees */
-#define NUM_RAYS 320   /* Number of rays to cast */
+#define NUM_RAYS 640   /* Number of rays to cast */
 #define MAX_DEPTH 10   /* Maximum distance a ray can travel */
 
 
@@ -58,17 +60,17 @@ typedef struct GameState GameState;
 
 extern GameState game_state;
 
-void render_frame(SDL_Renderer *renderer, Player *player, Textures *textures,
-		GameState *game_state);
-void handle_events(int *running);
+void render_frame(SDL_Renderer *renderer, Player *player,
+	Textures *textures, GameState *game_state, WeaponSystem *weapon_system);
+void handle_events(int *running, GameState *game_state);
 void cast_rays(SDL_Renderer *renderer, Player *player, const int maze[15][15],
 	Textures *textures);
 void draw_textured_wall(SDL_Renderer *renderer, int x, int wall_height,
 	float tex_x, float distance, int is_ns, Textures *textures);
 void draw_floor(SDL_Renderer *renderer, int x, int wall_height,
 		const Player *player, float ray_angle, Textures *textures);
-void draw_minimap(SDL_Renderer *renderer, const Player *player,
-		GameState *game_state);
+void draw_minimap(SDL_Renderer *renderer, const Player *player, GameState
+	*game_state, WeaponSystem *weapon_system);
 void toggle_minimap(GameState *game_state);
 void cleanup(SDL_Window *window, SDL_Renderer *renderer);
 
