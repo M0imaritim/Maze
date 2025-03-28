@@ -1,20 +1,29 @@
 # 🏰 Maze Game (Raycasting 3D Maze)
 
+![Maze Game Banner](./textures/Readme/banner.jpg)
+
 ## 📌 Overview
 
 **Maze Game** is a **real-time 3D maze exploration game** built using **SDL2 and raycasting techniques**. The game renders a **pseudo-3D environment** using a **2D grid-based map**, creating an immersive experience for the player. Navigate through the maze, avoid obstacles, and uncover the secrets hidden within its walls!
 
-All code strictly adheres to **Betty coding standards** to ensure maintainability and readability.
+<p align="center">
+  <img src="./textures/Readme/gameplay.gif" width="70%" alt="Maze Gameplay"/>
+</p>
 
 ## 🎮 Features
 
-- **Raycasting rendering** for a **3D perspective**
-- **Player movement and rotation** with smooth controls
-- **Textured walls and floors** for a realistic feel
-- **Dynamic enemy AI** to increase the challenge
-- **Weapon mechanics** for combat gameplay
-- **Minimap feature** for navigation assistance
-- **Modular code structure** for easy maintenance and expansion
+- 🎯 **Raycasting rendering** for a **3D perspective**
+- 🎮 **Player movement and rotation** using **WASD** and **Arrow Keys**
+- 🏰 **Textured walls and floors** for a realistic feel
+- 👹 **Dynamic enemy** to increase the challenge
+- 🔫 **Weapon mechanics** for combat gameplay
+- 🗺️ **Minimap feature** for navigation assistance
+- 🛠️ **Modular code structure** for easy maintenance and expansion
+
+<p align="center">
+  <img src="./textures/Readme/minimap.png" width="45%" alt="Minimap Feature"/>
+  <img src="./textures/Readme/enm33.png" width="45%" alt="Enemy AI in Action"/>
+</p>
 
 ## 🛠️ Technologies Used
 
@@ -58,7 +67,18 @@ Maze
 │-- obj/                     # Compiled object files (generated during compilation)
 │-- Makefile                 # Automates compilation and linking
 │-- README.md                # Project documentation (setup, controls, and gameplay)
+│-- screenshots/             # Screenshots and GIFs for documentation
 ```
+
+## 🏗️ How the Raycasting Algorithm Works
+
+Raycasting is used to create a **3D illusion from a 2D map** by casting rays from the player's viewpoint. Here's a breakdown of how it works:
+
+1. **Cast Rays** 📡: For each vertical column of the screen, a ray is projected.
+2. **Detect Wall Collisions** 🚧: The ray moves step by step until it hits a wall.
+3. **Calculate Distance** 📏: The distance from the player to the wall is measured to determine depth.
+4. **Render Wall Heights** 🏗️: The closer the wall, the taller it appears; the farther, the shorter.
+5. **Apply Textures** 🎨: The correct slice of the texture is mapped to each wall column.
 
 ## 🚀 Installation & Running the Game
 
@@ -69,13 +89,6 @@ Ensure you have the following installed:
 - **GCC Compiler**
 - **SDL2 Development Libraries**
 - **SDL2_image Library**
-
-### **Cloning the Repository**
-
-```sh
-git clone https://github.com/M0imaritim/Maze
-cd Maze
-```
 
 ### **Install SDL2 & SDL2_image**
 
@@ -90,6 +103,15 @@ sudo apt install libsdl2-dev libsdl2-image-dev
 
 ```sh
 brew install sdl2 sdl2_image
+```
+
+### **Cloning the Repository**
+
+To get started, clone the repository:
+
+```sh
+git clone https://github.com/M0imaritim/Maze.git
+cd Maze
 ```
 
 ### **Compiling the Game**
@@ -116,11 +138,11 @@ After compilation, run:
 | ----- | ------------- |
 | W     | Move Forward  |
 | S     | Move Backward |
-| A     | Strafe Left   |
-| D     | Strafe Right  |
-| ←     | Turn Left     |
-| →     | Turn Right    |
+| A     | Turn Left     |
+| D     | Turn Right    |
+| ← →   | Rotate View   |
 | SPACE | Shoot Weapon  |
+| ESC   | Quit Game     |
 
 ## 🛠️ Troubleshooting
 
@@ -139,6 +161,14 @@ Check if SDL2 is installed correctly and that your system supports hardware acce
 ## 🤝 Contributing
 
 Feel free to fork the repository and submit pull requests! Contributions for **optimizations, bug fixes, and new features** are welcome.
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+## ⚠️ Code Compliance
+
+This code follows **strict compliance with the Betty coding style**.
 
 ---
 
